@@ -33,6 +33,8 @@ const api =  axios.create({
   // baseURL: 'http://f1.sergei.info:3000/'
 })
 
+
+
 function FirstHomeSection
   ({
     primary,
@@ -61,6 +63,43 @@ function FirstHomeSection
   const [isOpen, setIsOpen] = useState(false);
   const fileInputRef = useRef();
   
+  const postSearch = (apiString,buffer,url) => {
+    let r = 0;
+    let m = false;    
+    switch(rotationOption) {
+      case "no rotation":
+         r = 0;
+        break;
+      case "multiples of 90 degrees":
+         r = 1;
+         break;
+      case "arbitrary":
+         r = 2;
+         break;
+      default:
+         r = 0;
+    }
+    switch(mirroredOption) {
+      case "no":
+         m = false;
+         break;
+      case "yes":
+         m = true;
+         break;
+      default:
+         m = false;
+    }
+    api.post(apiString, {
+      buffer: buffer,
+      url: url,
+      rotation: r,
+      mirrored: m
+    }).then(response => {
+      (typeof response.data != "object") ? setServerResponse(null) : setServerResponse(response.data)
+      })
+      .finally(() => {setSearchingImage(false);});
+  }
+
   useEffect(() => {
     if (image) {
       setServerResponse(null);
@@ -69,25 +108,17 @@ function FirstHomeSection
         const buf = new Buffer.from(reader.result,'ascii');
         setPreview("data:image/png;base64," + Buffer.from(buf).toString('base64'));
         setSearchingImage(true);
-        api.post(`/search/`,{
-          buffer: reader.result,
-          url: "none"
-        }).then(response => {
-          console.log("After post:");
-          console.log(typeof response);
-          console.log(response);
-          (typeof response.data != "object") ? setServerResponse(null) : setServerResponse(response.data)
-          })
-          .finally(() => {setSearchingImage(false);});
+        postSearch("/search/", reader.result,"none");
       }; 
-       reader.readAsBinaryString(image)
+       reader.readAsBinaryString(image);
        
     } else {
       setPreview(null);
     }
   }, [image]); 
 
-   
+
+    
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
@@ -99,25 +130,17 @@ function FirstHomeSection
   const content_mirrored = ["no", "yes"];
 
   const handelChange = (e) => {
+    setImage(null);
     setUrlString(e.target.value);
   };
 
   const onClickSearchButton = () => {
     if (urlString) {
+      setServerResponse(null);
       const urlStringWithHttp  = (urlString.indexOf("http")>-1) ? urlString : 'http://'+urlString;
       setPreview(urlStringWithHttp);
       setSearchingImage(true);
-      api.post(`/search/`,{
-        buffer: '',
-        url: urlStringWithHttp
-      }).then(response => {
-        console.log("After post URL:");
-        console.log(response);
-        console.log(typeof response);
-        (typeof response.data != "object") ? setServerResponse(null) : setServerResponse(response.data)
-        console.log("in URL then")
-      })
-        .finally(() => {setSearchingImage(false); console.log("in URL finally");});
+      postSearch("/searchurl/", '',urlStringWithHttp);
     }
   };
 
@@ -159,6 +182,7 @@ function FirstHomeSection
                     ref={fileInputRef}
                     accept="image/*"
                     onChange={(event) => {
+                      setSearchingImage(false);
                       const file = event.target.files[0];
                       if (file && file.type.substr(0, 5) === "image") {
                         setImage(file);

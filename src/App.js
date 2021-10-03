@@ -55,12 +55,12 @@ class  App extends React.Component {
           <Route exact path="/" render={() => <Home  currentUser={this.state.currentUser} />} />            
           <Route exact path="/sign-up" render={(props) => <SignUpSignIn {...props} currentUser={this.state.currentUser} />} />       
         </Switch>
-        <Footer />
+
       </Router>
     );
   }
 
 }
-
+//        <Footer />
 //          <Route path='/' exact component={Home} />
 export default App;

@@ -13,7 +13,7 @@ class SignIn extends React.Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
     };
   }
 
@@ -36,13 +36,16 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
+ 
+  //onClickGoogleButton = () => (signInWithGoogle
+
   render() {
     return (
       <div className='sign-in'>
         <h2 className='title'>I already have an account</h2>
         <span  className='desc'>Sign in with your email and password</span>
 
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} >
           <FormInput
             name='email'
             type='email'
@@ -50,6 +53,7 @@ class SignIn extends React.Component {
             value={this.state.email}
             label='email'
             required
+            
           />
           <FormInput
             name='password'
@@ -60,8 +64,8 @@ class SignIn extends React.Component {
             required
           />
           <div className='buttons'>
-            <CustomButton type='submit'> Sign in </CustomButton>
-            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton type='submit'  > Sign in </CustomButton>
+            <CustomButton  onClick={signInWithGoogle} formnovalidate  isGoogleSignIn>
               Sign in with Google
             </CustomButton>
           </div>

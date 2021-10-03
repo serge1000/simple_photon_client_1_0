@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
-import { Button } from '../../globalStyles';
 import { auth } from '../../firebase/firebase.utils';
 import {
   Nav,
@@ -10,14 +9,12 @@ import {
   MobileIcon,
   NavMenu,
   NavItem,
-  NavItemBtn,
   NavLinks,
-  NavBtnLink
 } from './Navbar.elements';
 
 function Navbar( {currentUser} ) {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
+  const [button, setButton] = useState(true); //??????
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);

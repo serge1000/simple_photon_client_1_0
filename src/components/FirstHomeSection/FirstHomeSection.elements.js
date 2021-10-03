@@ -79,27 +79,59 @@ export const InputContainer = styled.div`
   }
 `;
 
+export const Container = styled.div`
+  z-index: 1;
+  width: 100%;
+  max-width: 1300px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 50px;
+  padding-left: 50px;
+
+
+  padding-bottom: 8rem;    /* Footer height */
+
+
+  @media screen and (max-width: 991px) {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+`;
+//height: 460px;
+
 export const InfoSec = styled.div`
   color: #fff;
   padding: 40px 0;
   background: #7ba0aa;
-  height: 460px;
+
+  position: relative;
+  min-height: 100vh;
+
 
   @media screen and (max-width: 768px) {
   color: #fff;
   padding: 60px 0;
   background: #7ba0aa;
-  height: 900px;
+
   }
 
 `;
-
+//  height: 900px;
 export const InfoRow = styled.div`
   display: flex;
   margin: 0 -15px -15px -15px;
   flex-wrap: wrap;
   align-items: center;
   flex-direction: ${({ imgStart }) => (imgStart ? 'row-reverse' : 'row')};
+`;
+
+export const InfoRow2 = styled.div`
+  display: flex;
+  margin: 0 -15px -15px -15px;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  background: #fff;
 `;
 
 export const InfoColumn = styled.div`
@@ -137,7 +169,7 @@ export const ImageDiv = styled.div`
   padding: 0;
   margin: 0px;
   background-color: #7ba0aa;
-  cursor: none;
+  cursor: default;
 
   @media screen and (max-width: 768px) {
 
@@ -148,9 +180,20 @@ export const ImageDiv = styled.div`
 export const ImgWrapper = styled.div`
   display: flex;
   align-items: center;
-  cursor: none
+
 `;
 
+
+export const PopupImg = styled.img`
+  padding-right: 0;
+  border: 0;
+  max-width: 100%;
+  vertical-align: middle;
+  display: inline-block;
+  max-height: 100%;
+  cursor: default;
+
+`;
 export const Img = styled.img`
   padding-right: 0;
   border: 0;
@@ -158,7 +201,7 @@ export const Img = styled.img`
   vertical-align: middle;
   display: inline-block;
   max-height: 360px;
-  cursor: none;
+  cursor: ${({ cursor }) => (cursor)};
 
 `;
 
@@ -169,6 +212,22 @@ export const TopLine = styled.div`
   font-weight: 700;
   letter-spacing: 1.4px;
   margin-bottom: 16px;
+`;
+
+export const Div1InfoRow2 = styled.div`
+color: #4c5163;
+margin: 50px, 0px;
+text-align:center;
+`;
+
+
+export const HeadingInfoRow2 = styled.h1`
+font-size: 18px;
+line-height: 16px;
+font-weight: 700;
+letter-spacing: 1.4px;
+margin: 20px 5px;
+
 `;
 
 export const Heading = styled.h1`

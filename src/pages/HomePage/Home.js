@@ -15,12 +15,13 @@ function Home({
   return (
     <>
       <FirstHomeSection {...homeObjOne} />
-      <InfoSection {...homeObjThree} />
-      <InfoSection {...homeObjTwo} />
-      <Pricing />
-      <InfoSection {...homeObjFour} />
     </>
   );
 }
 
 export default Home;
+
+{/* <InfoSection {...homeObjThree} />
+<InfoSection {...homeObjTwo} />
+<Pricing />
+<InfoSection {...homeObjFour} /> */}

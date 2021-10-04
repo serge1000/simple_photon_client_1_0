@@ -53,9 +53,9 @@ class  App extends React.Component {
         <Navbar currentUser={this.state.currentUser} />
         <Switch>
           <Route exact path="/" render={() => <Home  currentUser={this.state.currentUser} />} />            
-          <Route exact path="/sign-up" render={(props) => <SignUpSignIn {...props} currentUser={this.state.currentUser} />} />       
+          <Route exact path="/sign-up" render={(props) => <SignUpSignIn currentUser={this.state.currentUser} />} />       
         </Switch>
-
+        <Footer />
       </Router>
     );
   }

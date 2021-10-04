@@ -92,7 +92,7 @@ export const Button = styled.button`
     background-color: ${({ primary }) => (primary ? '#0467FB' : '#4B59F7')};
   }
 
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
   }
 `;

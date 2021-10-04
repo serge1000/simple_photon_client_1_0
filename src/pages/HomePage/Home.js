@@ -1,8 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useRef, useState, useEffect } from "react";
-import { homeObjOne, homeObjTwo, homeObjThree, homeObjFour } from './Data';
-import { InfoSection, Pricing, FirstHomeSection } from '../../components';
+import { FirstHomeSection } from '../../components';
 
 function Home({
   currentUser
@@ -14,14 +12,9 @@ function Home({
 
   return (
     <>
-      <FirstHomeSection {...homeObjOne} />
+      <FirstHomeSection  />
     </>
   );
 }
 
 export default Home;
-
-{/* <InfoSection {...homeObjThree} />
-<InfoSection {...homeObjTwo} />
-<Pricing />
-<InfoSection {...homeObjFour} /> */}

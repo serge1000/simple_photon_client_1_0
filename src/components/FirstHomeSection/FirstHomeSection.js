@@ -3,6 +3,9 @@ import axios from "axios";
 import OptionsRadioButton from "../options-radio-button/options-radio-button";
 import CardsList from '../CardList/CardList';
 import Popup from '../Popup/popup.component';
+import DefaultImage from '../../images/undraw_search_orng.svg'
+import WaitingImage from '../../images/waitingimage.svg';
+
 import {
   InfoSec,
   InfoRow,
@@ -16,7 +19,7 @@ import {
   InputContainer,
   Img,
   UploadIcon,
-  SearchIcon,
+  SearchIcon, 
   Form,
   FormInput,
   SearchButton,
@@ -33,37 +36,27 @@ const api =  axios.create({
   // baseURL: 'http://f1.sergei.info:3000/'
 })
 
-
-
-function FirstHomeSection
-  ({
-    primary,
-    lightBg,
-    topLine,
-    lightTopLine,
-    lightText,
-    lightTextDesc,
-    headline,
-    description,
-    description1,
-    buttonLabel,
-    img,
-    alt,
-    imgStart,
-    start
-  }) 
+function FirstHomeSection({img,alt }) 
  {
+
+  const content_rotation = [
+    "no rotation",
+    "multiples of 90 degrees",
+    "arbitrary",
+  ];
+  const content_mirrored = ["no", "yes"];
+
   const [urlString, setUrlString] = useState("");
   const [serverResponse, setServerResponse] = useState(null);
-  const [searchingImage, setSearchingImage] = useState(false);
-  const [image, setImage] = useState();
+  const [waitingImage, setWaitingImage] = useState(false);
+  const [image, setImage] = useState("");
   const [preview, setPreview] = useState("");
   const [mirroredOption, setMirroredOption] = useState("no");
   const [rotationOption, setRotationOption] = useState("no rotation");
   const [isOpen, setIsOpen] = useState(false);
   const fileInputRef = useRef();
   
-  const postSearch = (apiString,buffer,url) => {
+  const postSearch = (apiString,buffer,url,rotationOption,mirroredOption) => {
     let r = 0;
     let m = false;    
     switch(rotationOption) {
@@ -97,7 +90,7 @@ function FirstHomeSection
     }).then(response => {
       (typeof response.data != "object") ? setServerResponse(null) : setServerResponse(response.data)
       })
-      .finally(() => {setSearchingImage(false);});
+      .finally(() => {setWaitingImage(false);});
   }
 
   useEffect(() => {
@@ -107,8 +100,8 @@ function FirstHomeSection
       reader.onloadend = () => {
         const buf = new Buffer.from(reader.result,'ascii');
         setPreview("data:image/png;base64," + Buffer.from(buf).toString('base64'));
-        setSearchingImage(true);
-        postSearch("/search/", reader.result,"none");
+        setWaitingImage(true);
+        postSearch("/search/", reader.result,"none",rotationOption,mirroredOption);
       }; 
        reader.readAsBinaryString(image);
        
@@ -117,59 +110,99 @@ function FirstHomeSection
     }
   }, [image]); 
 
-
-    
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  }
-    const content_rotation = [
-    "no rotation",
-    "multiples of 90 degrees",
-    "arbitrary",
-  ];
-  const content_mirrored = ["no", "yes"];
-
-  const handelChange = (e) => {
-    setImage(null);
-    setUrlString(e.target.value);
-  };
-
   const onClickSearchButton = () => {
     if (urlString) {
+      setImage("");
       setServerResponse(null);
       const urlStringWithHttp  = (urlString.indexOf("http")>-1) ? urlString : 'http://'+urlString;
       setPreview(urlStringWithHttp);
-      setSearchingImage(true);
-      postSearch("/searchurl/", '',urlStringWithHttp);
+      setWaitingImage(true);
+      postSearch("/searchurl/", '',urlStringWithHttp,rotationOption,mirroredOption);
     }
+  };
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
+
+  const handelChange = (e) => {
+    setImage("");
+    setPreview("");
+    setUrlString(e.target.value);
+    setServerResponse(null);
   };
 
   const onChangeRadioButton_R = (event) => {
     setRotationOption(event.target.value);
+
+    if (image) {
+      setServerResponse(null);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const buf = new Buffer.from(reader.result,'ascii');
+        setPreview("data:image/png;base64," + Buffer.from(buf).toString('base64'));
+        setWaitingImage(true);
+        postSearch("/search/", reader.result,"none",event.target.value,mirroredOption);
+      }; 
+       reader.readAsBinaryString(image);
+       
+    } else if (urlString) {
+      setServerResponse(null);
+      const urlStringWithHttp  = (urlString.indexOf("http")>-1) ? urlString : 'http://'+urlString;
+      setPreview(urlStringWithHttp);
+      setWaitingImage(true);
+      postSearch("/searchurl/", '',urlStringWithHttp,event.target.value,mirroredOption);
+    } else {
+      setPreview(null);
+    }
   };
   const onChangeRadioButton_M = (event) => {
     setMirroredOption(event.target.value);
+
+    if (image) {
+      setServerResponse(null);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const buf = new Buffer.from(reader.result,'ascii');
+        setPreview("data:image/png;base64," + Buffer.from(buf).toString('base64'));
+        setWaitingImage(true);
+        postSearch("/search/", reader.result,"none",rotationOption,event.target.value);
+      }; 
+       reader.readAsBinaryString(image);
+       
+    } else if (urlString) {
+      setServerResponse(null);
+      const urlStringWithHttp  = (urlString.indexOf("http")>-1) ? urlString : 'http://'+urlString;
+      setPreview(urlStringWithHttp);
+      setWaitingImage(true);
+      postSearch("/searchurl/", '',urlStringWithHttp,rotationOption,event.target.value);
+    } else {
+      setPreview(null);
+    }
   };
 
 
   return (
     <>
-      <InfoSec lightBg={lightBg}>
+      <InfoSec >
         <Container>
-          <InfoRow imgStart={imgStart}>
+          <InfoRow >
             <InfoColumn>
               <TextWrapper>
-                <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
-                <Heading lightText={lightText}>{headline}</Heading>
-                <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
+                <TopLine >Reverse Image Search</TopLine>
+                <Heading > </Heading>
+                <Subtitle >Upload an image or enter an image URL:</Subtitle>
                 <InputContainer>
                   <UploadButton
                     big
                     fontBig
-                    primary={primary}
-                    onClick={(event) => {
+                      onClick={(event) => {
                       event.preventDefault();
                       fileInputRef.current.click();
+                      setPreview("");
+                      setUrlString("");
+                      setServerResponse(null);
+
                     }}
                   >
                     <UploadIcon />
@@ -182,12 +215,13 @@ function FirstHomeSection
                     ref={fileInputRef}
                     accept="image/*"
                     onChange={(event) => {
-                      setSearchingImage(false);
+                      setImage("");
+                      setWaitingImage(false);
                       const file = event.target.files[0];
                       if (file && file.type.substr(0, 5) === "image") {
                         setImage(file);
                       } else {
-                        setImage(null);
+                        setImage("");
                       }
                     }}
                   />
@@ -221,28 +255,18 @@ function FirstHomeSection
             </InfoColumn>
             <InfoColumn>
               <ImageDiv>
-                <ImgWrapper start={start}>
+                <ImgWrapper >
                   {preview ? (
                     <Img
                       alt="preview"
                       src={preview}
-                      cursor="pointer"
-                      onClick={() => { setIsOpen(!isOpen);}}
+                      cursor="default"
+
                     />
-                  ) : ( <Img src={img} cursor="default" alt={alt} />)
+                  ) : ( <Img src={DefaultImage} cursor="default" alt='' />)
                   }
 
-                  {
-                    (isOpen && preview) ? (
-                    <Popup
-                      content={<>
-                        <PopupImg alt="preview" src={preview} />
-                      </>}
-                      handleClose={togglePopup}
-                    />
-                    ) : ('')
 
-                  }
                 </ImgWrapper>
               </ImageDiv>
 
@@ -250,10 +274,10 @@ function FirstHomeSection
           </InfoRow>
 
           {
-            (searchingImage) ? (
+            (waitingImage) ? (
                 <InfoRow2>
                   <Div1InfoRow2>
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="" />
+                      <img src={WaitingImage} alt="Searching ..." />
                       <HeadingInfoRow2>Searching ...</HeadingInfoRow2>
                   </Div1InfoRow2>
                 </InfoRow2>
@@ -281,7 +305,7 @@ function FirstHomeSection
                 </InfoRow2>
                 <InfoRow2>
                   <Div1InfoRow2>
-                      <CardsList searchcards={serverResponse.results} CardClick='' cardnumber={serverResponse.results.length} />
+                      <CardsList searchcards={serverResponse.results} cardnumber={serverResponse.results.length} />
                   </Div1InfoRow2>
                 </InfoRow2>  
                 </>
@@ -296,4 +320,18 @@ function FirstHomeSection
   );
 }
 
+
+/*
+                      onClick={() => { setIsOpen(!isOpen);}}
+{
+  (isOpen && preview) ? (
+  <Popup
+    content={<>
+      <PopupImg alt="preview" src={preview} />
+    </>}
+    handleClose={togglePopup}
+  />
+  ) : ('')
+
+} */
 export default FirstHomeSection;

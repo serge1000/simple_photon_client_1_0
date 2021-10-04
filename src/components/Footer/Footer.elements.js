@@ -10,10 +10,10 @@ export const FooterContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  height: 8rem; 
+  height: 7rem; 
 `;
 
 export const FooterSubscription = styled.section`
@@ -22,7 +22,7 @@ export const FooterSubscription = styled.section`
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 5px;
   padding: 0px;
   color: #fff;
 `;
@@ -30,7 +30,7 @@ export const FooterSubscription = styled.section`
 export const FooterSubHeading = styled.p`
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 1rem;
 `;
 

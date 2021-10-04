@@ -8,7 +8,7 @@ export const Form = styled.div`
   flex-wrap: nowrap;
   align-items: center;
 
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     margin-top: 20px;
 
@@ -28,7 +28,7 @@ export const FormInput = styled.input`
   &::placeholder {
     color: #859194;
   }
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 960px) {
     width: 100%;
   }
 `;
@@ -36,7 +36,7 @@ export const SecLinks = styled(Link)`
   text-decoration: none;
   
 
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
   }
 `;
@@ -44,7 +44,7 @@ export const SecLinks = styled(Link)`
 export const FileUpload = styled(styled.input)`
   display: none;
 
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
   }
 `;
@@ -92,7 +92,7 @@ export const Container = styled.div`
   padding-bottom: 8rem;    /* Footer height */
 
 
-  @media screen and (max-width: 991px) {
+  @media screen and (max-width: 768px) {
     padding-right: 30px;
     padding-left: 30px;
   }
@@ -105,7 +105,7 @@ export const InfoSec = styled.div`
   background: #7ba0aa;
 
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);;
 
 
   @media screen and (max-width: 768px) {
@@ -122,7 +122,7 @@ export const InfoRow = styled.div`
   margin: 0 -15px -15px -15px;
   flex-wrap: wrap;
   align-items: center;
-  flex-direction: ${({ imgStart }) => (imgStart ? 'row-reverse' : 'row')};
+  flex-direction: row;
 `;
 
 export const InfoRow2 = styled.div`
@@ -131,7 +131,7 @@ export const InfoRow2 = styled.div`
   flex-wrap: wrap;
 
   justify-content: center;
-  background: #fff;
+  background: #7ba0aa;
 `;
 
 export const InfoColumn = styled.div`
@@ -206,7 +206,7 @@ export const Img = styled.img`
 `;
 
 export const TopLine = styled.div`
-  color: ${({ lightTopLine }) => (lightTopLine ? '#4c5163' : '#4B59F7')};
+  color: #4c5163;
   font-size: 18px;
   line-height: 16px;
   font-weight: 700;
@@ -218,6 +218,7 @@ export const Div1InfoRow2 = styled.div`
 color: #4c5163;
 margin: 50px, 0px;
 text-align:center;
+background: #7ba0aa;
 `;
 
 
@@ -227,6 +228,7 @@ line-height: 16px;
 font-weight: 700;
 letter-spacing: 1.4px;
 margin: 20px 5px;
+background: #7ba0aa;
 
 `;
 
@@ -235,9 +237,9 @@ export const Heading = styled.h1`
   font-size: 48px;
   line-height: 1.1;
   font-weight: 600;
-  color: ${({ lightText }) => (lightText ? '#33393d' : '#1c2237')};
+  color: #33393d;
 `;
-//color: ${({ lightText }) => (lightText ? '#f7f8fa' : '#1c2237')};
+
 export const Subtitle = styled.p`
   max-width: 440px;
   margin-bottom: 35px;
@@ -245,7 +247,7 @@ export const Subtitle = styled.p`
   line-height: 24px;
   font-weight: 700;
   letter-spacing: 1.1px;
-  color: ${({ lightTextDesc }) => (lightTextDesc ? '#4c5163' : '#1c2237')};
+  color: #4c5163;
 `;
 
 export const SearchButton = styled.button`
@@ -269,7 +271,7 @@ export const SearchButton = styled.button`
   }
 
   @media screen and (max-width: 960px) {
-    width: 100%;
+    width: 50px;
   }
 `;
 

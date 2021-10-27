@@ -17,7 +17,7 @@ function SignUpSignIn({
   currentUser
 }) {
 
-  if (currentUser) {
+  if (currentUser !== 1 && currentUser) {
     return <Redirect to='/'/>;
   }
 

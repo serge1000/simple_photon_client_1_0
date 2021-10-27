@@ -12,7 +12,7 @@ class  App extends React.Component {
     super();
 
     this.state ={
-      currentUser: null
+      currentUser: 1
     }
   }
 
@@ -43,17 +43,17 @@ class  App extends React.Component {
   componentWillUnmount(){
     this.unsubscribeFromAuth();
   }
-//           <Route path='/sign-up' component={SignUpSignIn} />    
 
   render() {
+    //debugger;
     return (
       <Router>
         <GlobalStyle />
         <ScrollToTop />
         <Navbar currentUser={this.state.currentUser} />
         <Switch>
-          <Route exact path="/" render={() => <Home  currentUser={this.state.currentUser} />} />            
-          <Route exact path="/sign-up" render={(props) => <SignUpSignIn currentUser={this.state.currentUser} />} />       
+        <Route exact path="/" render={() => <Home  currentUser={this.state.currentUser} />} />            
+        <Route exact path="/sign-up" render={(props) => <SignUpSignIn currentUser={this.state.currentUser} />} />  
         </Switch>
         <Footer />
       </Router>
@@ -61,6 +61,5 @@ class  App extends React.Component {
   }
 
 }
-//        <Footer />
-//          <Route path='/' exact component={Home} />
+
 export default App;

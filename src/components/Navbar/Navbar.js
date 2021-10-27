@@ -32,7 +32,7 @@ function Navbar( {currentUser} ) {
   }, []);
 
   window.addEventListener('resize', showButton);
-
+  const currentUser_temp = currentUser === 1 ? null : currentUser;
   return (
     <>
       <IconContext.Provider value={{ color: '#33393d' }}>
@@ -46,7 +46,7 @@ function Navbar( {currentUser} ) {
             </MobileIcon>
 
             <NavMenu onClick={handleClick} click={click}>
-              { currentUser ? (
+              { currentUser_temp ? (
                     <NavItem>
                     <NavLinks to='/' onClick={() => { auth.signOut(); closeMobileMenu();}}> 
                     Log Out

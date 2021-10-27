@@ -36,9 +36,6 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
- 
-  //onClickGoogleButton = () => (signInWithGoogle
-
   render() {
     return (
       <div className='sign-in'>
